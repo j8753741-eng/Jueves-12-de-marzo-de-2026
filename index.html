@@ -4,38 +4,57 @@
 <meta charset="UTF-8">
 <title>Carta para ti 💜</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-padding:0;
-background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+background:linear-gradient(180deg,#050510,#0b0b2e,#140c2b);
+color:white;
 font-family:'Playfair Display',serif;
-color:#ffffff;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
 overflow-x:hidden;
 }
 
-/* estrellas suaves */
-body::before{
-content:"";
+/* estrellas fondo */
+
+.stars{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background-image:
-radial-gradient(2px 2px at 20% 30%,white,transparent),
-radial-gradient(2px 2px at 80% 70%,white,transparent),
-radial-gradient(1px 1px at 50% 10%,white,transparent),
-radial-gradient(1px 1px at 70% 40%,white,transparent),
-radial-gradient(2px 2px at 40% 80%,white,transparent);
-opacity:0.25;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+animation:moveStars 120s linear infinite;
+opacity:0.5;
+}
+
+@keyframes moveStars{
+from{background-position:0 0;}
+to{background-position:1000px 1000px;}
+}
+
+/* sobre */
+
+#envelope{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+font-size:16px;
+background:#b57aff;
+color:white;
+cursor:pointer;
+box-shadow:0 0 15px #b57aff;
+}
+
+button:hover{
+transform:scale(1.05);
 }
 
 /* carta */
@@ -46,7 +65,7 @@ padding:50px;
 border-radius:20px;
 box-shadow:0 0 40px rgba(180,120,255,0.4);
 backdrop-filter:blur(6px);
-}
+  }
 
 /* fecha */
 .fecha{
@@ -92,16 +111,57 @@ font-size:32px;
 color:#e6cfff;
 }
 
-/* dedicatoria final */
-.dedicatoria{
-margin-top:45px;
-padding-top:25px;
-border-top:1px solid rgba(255,255,255,0.2);
-font-style:italic;
-font-size:18px;
-color:#f2e6ff;
-line-height:1.8;
+.title{
+font-size:28px;
+margin-bottom:15px;
+}
+
+.nameStars{
+font-family:'Dancing Script',cursive;
+font-size:40px;
 text-align:center;
+margin:20px 0;
+color:#d9b3ff;
+text-shadow:0 0 15px #c48cff;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{opacity:0.7}
+to{opacity:1}
+}
+
+/* frase cielo */
+
+#skyMessage{
+text-align:center;
+margin-top:40px;
+font-size:20px;
+display:none;
+}
+
+/* ventana dedicatoria */
+
+#dedicationModal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+}
+
+#dedicationBox{
+background:#120c2c;
+padding:40px;
+border-radius:20px;
+max-width:600px;
+text-align:center;
+box-shadow:0 0 30px #b57aff;
+font-style:italic;
 }
 
 </style>
@@ -109,7 +169,22 @@ text-align:center;
 
 <body>
 
-<div class="carta">
+<div class="stars"></div>
+
+<!-- SOBRE -->
+
+<div id="envelope">
+<h2>💌 Una carta para ti mi amor</h2>
+<button onclick="openLetter()">Abrir carta</button>
+</div>
+
+<!-- CARTA -->
+
+<div id="letter">
+
+<div class="nameStars">
+  VALERIA ✨
+</div>
 
 <div class="fecha">Jueves 12 de marzo de 2026, por la noche</div>
 
@@ -173,11 +248,67 @@ Con todo mi cariño, mi admiración y todo el amor que guardo por ti.
 Para ti, siempre. 💜
 </div>
 
-<div class="dedicatoria">
-Si algún día el tiempo intenta borrar recuerdos, si las noches se vuelven silenciosas o si el mundo parece ir demasiado rápido, quiero que recuerdes algo: en algún lugar de este mismo cielo, alguien piensa en ti con un amor profundo, sincero y lleno de luz. Porque desde que llegaste a mi vida, mi corazón encontró una razón más para latir con alegría. Y aunque existan millones de estrellas en el universo, para mí siempre habrá una que brilla más que todas… y esa estrella eres tú.
+<!-- MENSAJE CIELO -->
+
+<div id="skyMessage">
+
+<p>🌙 Ahora tengo algo que pedirte…</p>
+
+<p><b>Asómate un momento a ver el cielo.</b><br>
+Porque hay algo que quiero decirte después de que lo hagas.</p>
+
+<button onclick="showDedication()">Listo</button>
+
 </div>
 
 </div>
+
+<!-- VENTANA DEDICATORIA -->
+
+<div id="dedicationModal">
+
+<div id="dedicationBox">
+
+<p>
+Si algún día el mundo parece demasiado grande o las noches demasiado silenciosas,
+quiero que recuerdes algo: en algún lugar bajo este mismo cielo hay alguien
+que piensa en ti con un amor profundo y sincero.
+</p>
+
+<p>
+Desde que llegaste a mi vida, todo tiene más sentido,
+las estrellas parecen brillar más fuerte
+y los momentos simples se vuelven recuerdos eternos.
+</p>
+
+<p>
+Y aunque existan millones de estrellas en el universo,
+para mí siempre habrá una que brilla más que todas…
+y esa estrella eres tú.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function openLetter(){
+
+document.getElementById("envelope").style.display="none";
+document.getElementById("letter").style.display="block";
+
+setTimeout(()=>{
+document.getElementById("skyMessage").style.display="block";
+},3000);
+
+}
+
+function showDedication(){
+document.getElementById("dedicationModal").style.display="flex";
+}
+
+</script>
 
 </body>
   </html>
